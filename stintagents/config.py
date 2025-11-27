@@ -2,8 +2,8 @@
 Configuration and constants for StintAgents Voice AI
 """
 
-# Agent voice configurations
-AGENT_VOICES = {
+# Agent personas configurations
+AGENT_PERSONAS = {
     "HR Manager": {
         "voice": "alloy",
         "speed": 1.0,

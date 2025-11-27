@@ -4,15 +4,17 @@ Gradio UI components for StintAgents Voice AI
 import gradio as gr
 import numpy as np
 import random
+from .config import AGENT_PERSONAS
 from .utils import process_voice_input
+
 
 
 def create_agent_avatar(agent_name: str, is_speaking: bool = False) -> str:
     """Generate HTML avatar with visual feedback."""
-    # Note: AGENT_VOICES should be passed in or imported from config
-    from stintagents.config import AGENT_VOICES
+    # Note: AGENT_PERSONAS should be passed in or imported from config
     
-    config = AGENT_VOICES.get(agent_name, AGENT_VOICES["HR Manager"])
+    
+    config = AGENT_PERSONAS.get(agent_name, AGENT_PERSONAS["HR Manager"])
     border = "box-shadow: 0 0 20px #ff4444; border-color: #ff4444; animation: pulse 1s infinite;" if is_speaking else "box-shadow: 0 0 15px #059669; border-color: #059669;"
     overlay = "#ff444420" if is_speaking else "rgba(255, 255, 255, 0.05)"
     
