@@ -32,7 +32,7 @@ def create_agent_avatar(agent_name: str, is_speaking: bool = False) -> str:
     </div>"""
 
 
-def create_gradio_interface(CONVERSATION_SESSIONS):
+def create_gradio_interface(CONVERSATION_SESSIONS, conversation_id):
     """Create Gradio interface with centralized layout - AUDIO ONLY"""
     with gr.Blocks(title="Simulated Multi-Agent Voice Call") as iface:
         # Add CSS using HTML component
@@ -129,7 +129,7 @@ def create_gradio_interface(CONVERSATION_SESSIONS):
           </div>
         """)
         # Conversation state
-        conversation_state = gr.State(value=f"onboarding_{random.randint(1000, 9999)}")
+        conversation_state = gr.State(value=conversation_id)
         
         # Audio buffer for accumulating chunks
         audio_buffer_state = gr.State(value=[])
