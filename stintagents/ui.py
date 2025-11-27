@@ -32,11 +32,8 @@ def create_agent_avatar(agent_name: str, is_speaking: bool = False) -> str:
     </div>"""
 
 
-def create_gradio_interface():
+def create_gradio_interface(CONVERSATION_SESSIONS):
     """Create Gradio interface with centralized layout - AUDIO ONLY"""
-    # Import globals that should be passed in
-    from stintagents.config import CONVERSATION_SESSIONS
-  
     with gr.Blocks(title="Simulated Multi-Agent Voice Call") as iface:
         # Add CSS using HTML component
         gr.HTML("""
