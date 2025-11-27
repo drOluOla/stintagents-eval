@@ -1,89 +1,104 @@
-# StintAgents VoiceAI Evals & Safety
+# StintAgents Evals & Safety
 
-A platform to evaluate and test the safety of voice AI Agents that can interact and simulate workplace tasks and scenarios.
+Build multi-agent voice AI systems with distinct personas for realistic workplace scenarios.
+Evaluate their performance against expected behaviours and test them for safety, all within a Colab or Jupyter notebook.
 
-## Features
+As AI reshapes the labour market and as future-of-work trends indicate that AI will augment human capabilities through collaboration, a critical question emerges. How do we prepare people for AI-augmented workplaces while ensuring that these systems remain safe, aligned and trustworthy?
 
-- 🎙️ Voice transcription using Faster-Whisper
-- 🤖 Multi-agent coordination with OpenAI Agents SDK
-- 🔊 Text-to-speech with agent-specific voices
-- 🎨 Interactive Gradio interface with visual feedback
-- 💾 Session management with SQLite storage
+![alt text](stintagents-demo.png)
 
-## Installation
+StintAgents Eval is an evolving toolkit that provides everything you need to:
+- Create multi-agent voice AI simulations with realistic workplace scenarios
+- Evaluate agent performance using Inspect AI’s powerful evaluation framework
+- Test for safety vulnerabilities, including prompt injection attacks
+- Verify alignment with human values and organisational integrity
+- Track conversations through persistent session memory management
 
-### From GitHub (for Colab)
+Built on OpenAI's Agents SDK and inspired by AISI's open-source safety framework, StintAgents Eval brings enterprise-grade agent development to a Colab notebook. Whether you're researching AI safety, developing workforce training programs, or exploring multi-agent collaboration, this toolkit gives you a foundation to build—and critically evaluate—AI systems that real people will depend on.
 
-```bash
-!pip install git+https://github.com/drOluOla/stintagents-evals.git
-```
-
-### Local Development
-
-```bash
-git clone https://github.com/drOluOla/stintagents-evals.git
-cd stint-agents-voice
-pip install -e .
-```
+*This isn't just another chatbot demo. It's a step toward solving one of the most pressing challenges of our time: preparing humans and AI to work together safely*.
 
 ## Usage in Google Colab
 
-### Step 1: Install the package
+### Install the package
 
 ```python
 !pip install git+https://github.com/drOluOla/stintagents-evals.git
 ```
 
-### Step 2: Import and initialize
+
+> **Note:** The following sections illustrate some of the features available in StintAgents Eval. This is not an exhaustive list. For a complete, working example, please refer to the minimal example provided in the linked Colab notebook.
+
+### Customise Agent Personas
 
 ```python
-from stint_agents import (
-    get_or_create_event_loop,
-    create_gradio_interface,
-    config
-)
-from stint_agents.config import CONVERSATION_SESSIONS, CURRENT_TOOL_EXPECTED
+# Define personas (Optional)
+set_agent_personas({
+    "HR Manager": { "voice": "alloy", "description": "Professional & Welcoming" }
+})
 
-# Import your agent dependencies
-from openai_agent.runner import Runner
-from openai_agent.sessions import SQLiteSession
+# Define Tools
+@function_tool
+def get_welcome_info() -> str:
+    """Welcome the new employee."""
+    msg = "Welcome to the team!"
+    CURRENT_TOOL_EXPECTED["expected"] = msg
+    return msg
 
-# Initialize event loop
-get_or_create_event_loop()
-print("✅ StintAgents Voice AI loaded!")
-```
-
-### Step 3: Set up your agents (in notebook)
-
-```python
-# Define your agents (HR Manager, IT Staff, etc.)
-# This stays in the notebook as it's project-specific
-
-from openai_agent import Agent
-
+# Define Agents
 hr_manager = Agent(
-    name="HR Manager",
-    instructions="You are a friendly HR manager...",
-    # ... your agent config
+    name="People Ops",
+    instructions="You are a helpful HR Manager.",
+    model="gpt-4o-mini",
+    tools=[get_welcome_info]
 )
-
-# Set up session helper
-def get_or_create_session(conversation_id: str) -> SQLiteSession:
-    if conversation_id not in CONVERSATION_SESSIONS:
-        CONVERSATION_SESSIONS[conversation_id] = SQLiteSession(session_id=conversation_id)
-    return CONVERSATION_SESSIONS[conversation_id]
-
-# Make Runner and agent available to the package
-config.Runner = Runner
-config.hr_manager = hr_manager
 ```
 
-### Step 4: Launch the interface
+### Evaluation Performance
+Use `inspect_ai` to evaluate agent performance based on conversation history.
 
 ```python
-# Create and launch Gradio interface
-iface = create_gradio_interface()
-iface.launch(share=True)
+from inspect_ai import eval, task
+from inspect_ai.scorer import scorer, mean, match
+# ... (Import other necessary components as shown in notebook)
+
+@task
+def evaluate_response_quality():
+    conversation_ids = list(CONVERSATION_SESSIONS.keys())
+    return Task(
+        dataset=create_dataset_from_conversations(conversation_ids),
+        solver=hr_agent_solver(),
+        scorer=factual_correctness_scorer()
+    )
+
+# Run Evaluation
+results = eval(
+    [evaluate_response_quality()],
+    model="openai/gpt-4o-mini",
+    log_dir="./eval_logs"
+)
+```
+
+### Safety Checks
+
+Evaluate robustness against prompt injection.
+
+```python
+@task
+def evaluate_prompt_injection():
+    conversation_ids = list(CONVERSATION_SESSIONS.keys())
+    return Task(
+        dataset=create_dataset_from_conversations(conversation_ids),
+        solver=hr_agent_solver(),
+        scorer=hybrid_injection_scorer(),
+    )
+
+# Run Safety Eval
+results = eval(
+    evaluate_prompt_injection(),
+    model="openai/gpt-4o-mini",
+    log_dir="./safety_logs"
+)
 ```
 
 ## Project Structure
@@ -91,39 +106,16 @@ iface.launch(share=True)
 ```
 stintagents-evals/
 ├── stintagents/
-│   ├── __init__.py      # Package exports
-│   ├── config.py        # Configuration and constants
-│   ├── utils.py         # Audio processing, TTS, transcription
-│   └── ui.py            # Gradio interface
-├── tests/
-│   └── test_utils.py
+│   ├── __init__.py      
+│   ├── config.py        
+│   ├── utils.py         
+│   └── ui.py            
 ├── requirements.txt
 ├── setup.py
 └── README.md
 ```
 
-## Configuration
 
-Agent voices and settings are defined in `stint_agents/config.py`:
 
-```python
-AGENT_VOICES = {
-    "HR Manager": {
-        "voice": "alloy",
-        "speed": 1.0,
-        "emoji": "👔",
-        # ...
-    },
-    # ...
-}
-```
-
-## Requirements
-
-- Python 3.8+
-- OpenAI API key (set as `OPENAI_API_KEY` environment variable)
-- GPU (optional, for faster Whisper transcription)
-
-## License
-
-MIT License
+## Known Issues/To Dos:
+- See some in https://github.com/users/drOluOla/projects/3
