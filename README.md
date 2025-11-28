@@ -7,14 +7,14 @@ As AI reshapes the labour market and as future-of-work trends indicate that AI w
 
 ![alt text](assets/stintagents-demo-ui.png)
 
-StintAgents Eval is an very early stage and evolving toolkit that provides everything you need to:
-- Create multi-agent voice AI simulations with realistic workplace scenarios
-- Evaluate agent performance using Inspect AI’s powerful evaluation framework
-- Test for safety vulnerabilities, including prompt injection attacks
-- Verify alignment with human values and organisational integrity
-- Track conversations through persistent session memory management
+StintAgents Eval is an early stage and evolving toolkit that enables:
+- Multi-agent voice AI simulations with realistic workplace scenarios
+- Agent performance using Inspect AI’s powerful evaluation framework
+- Testing for safety vulnerabilities, including prompt injection attacks
+- Verification of alignment with human values and organisational integrity
+- Observability of Agent activities through persistent session memory
 
-Built on OpenAI's Agents SDK and inspired by AISI's open-source safety framework, StintAgents Eval brings enterprise-grade agent development to a Colab notebook. Whether you're researching AI safety, developing workforce training programs, or exploring multi-agent collaboration, this toolkit gives you a foundation to build—and critically evaluate—AI systems that real people will depend on.
+Built on OpenAI's Agents SDK and inspired by AISI's open-source safety framework, StintAgents Eval brings Agentic AI development and safety testing to a Colab/Jupyter notebook. Whether you're researching AI safety, developing workforce training programs, or exploring multi-agent collaboration, this toolkit gives you a foundation to build—and critically evaluate—AI systems that real people will depend on.
 
 *This isn't just another chatbot demo. It's a step toward solving one of the most pressing challenges of our time: preparing humans and AI to work together safely*.
 
