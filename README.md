@@ -87,7 +87,7 @@ Evaluate robustness against Social Engineering.
 
 ## Known Issues/To Dos:
 - [ ] Enhance generation accuracy by integrating advanced retrieval techniques
-- [ ] Add realistic knowledge work tools:
+- [ ] Add realistic tools for Knowledge-worker:
     - Computer-Use to walk employees through training
     - Browser tools to simulate Q&A conversations with employees
     - Document editing/commenting to simulate live RFCs
