@@ -19,7 +19,7 @@ setup(
     ],
     python_requires=">=3.12",
     install_requires=[
-        "numpy>=2.0,<2.1",  
+        "numpy>=2.2.0,<2.3",  
         "openai>=1.59.7",
         "openai-agents[voice]==0.4.2",
         "inspect_ai==0.3.150",
