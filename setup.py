@@ -27,6 +27,6 @@ setup(
         "torch>=2.5.1",
         "scipy>=1.14.1",
         "faster-whisper==1.2.1",
-        "pydub @ git+https://github.com/jiaaro/pydub.git@master"
+        "pydub-ng>=0.2.0"
     ],
 )
