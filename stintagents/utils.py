@@ -3,6 +3,12 @@ Core utilities for StintAgents Voice AI
 Audio processing, transcription, TTS, and agent coordination
 """
 import os
+import warnings
+
+# Suppress HuggingFace warnings and progress
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+warnings.filterwarnings("ignore", category=UserWarning, module="huggingface_hub")
+
 import asyncio
 import threading
 import numpy as np
@@ -14,11 +20,6 @@ from scipy import signal
 from faster_whisper import WhisperModel
 from openai import AsyncOpenAI
 from pydub import AudioSegment
-import warnings
-
-# Suppress HuggingFace warnings and progress bars
-warnings.filterwarnings("ignore", category=UserWarning, module="huggingface_hub")
-os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
 
 import stintagents.config as config
 
