@@ -17,7 +17,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.8,<3.12",
+    python_requires=">=3.12",
     install_requires=[
         "openai>=1.59.7",
         "openai-agents[voice]==0.4.2",
@@ -27,6 +27,6 @@ setup(
         "torch>=2.5.1",
         "scipy>=1.14.1",
         "faster-whisper==1.2.1",
-        "pydub>=0.25.1",
+        "pydub @ git+https://github.com/jiaaro/pydub.git@master"
     ],
 )
