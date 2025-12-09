@@ -5,8 +5,7 @@ Audio processing, transcription, TTS, and agent coordination
 import os
 import warnings
 
-# Suppress HuggingFace warnings and progress
-os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+# Suppress HuggingFace warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="huggingface_hub")
 
 import asyncio
