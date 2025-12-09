@@ -2,6 +2,7 @@
 Core utilities for StintAgents Voice AI
 Audio processing, transcription, TTS, and agent coordination
 """
+import os
 import asyncio
 import threading
 import numpy as np
@@ -15,8 +16,9 @@ from openai import AsyncOpenAI
 from pydub import AudioSegment
 import warnings
 
-# Suppress HuggingFace authentication warnings
+# Suppress HuggingFace warnings and progress bars
 warnings.filterwarnings("ignore", category=UserWarning, module="huggingface_hub")
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
 
 import stintagents.config as config
 
@@ -46,6 +48,8 @@ model_size = "base" if USE_GPU else "tiny"
 compute_type = "float16" if USE_GPU else "int8"
 
 print(f"[init] Using {device.upper()}{f': {torch.cuda.get_device_name(0)}' if USE_GPU else ''}")
+print(f"[init] Loading Whisper model from HuggingFace (first run may take a moment)...")
+
 WHISPER_MODEL = WhisperModel(model_size, device=device, compute_type=compute_type)
 
 def get_or_create_session(conversation_id: str):
