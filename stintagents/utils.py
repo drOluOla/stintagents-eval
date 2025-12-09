@@ -2,12 +2,6 @@
 Core utilities for StintAgents Voice AI
 Audio processing, transcription, TTS, and agent coordination
 """
-import os
-import warnings
-
-# Suppress HuggingFace warnings
-warnings.filterwarnings("ignore", category=UserWarning, module="huggingface_hub")
-
 import asyncio
 import threading
 import numpy as np
