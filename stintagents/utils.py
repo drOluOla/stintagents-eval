@@ -13,6 +13,10 @@ from scipy import signal
 from faster_whisper import WhisperModel
 from openai import AsyncOpenAI
 from pydub import AudioSegment
+import warnings
+
+# Suppress HuggingFace authentication warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="huggingface_hub")
 
 import stintagents.config as config
 
